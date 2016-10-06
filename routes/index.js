@@ -33,7 +33,7 @@ router.post('/output', function(req,res){
       var line_obj = {};
       if(line){
         var line_split = line.split(" ");
-        if(line_split[origin_pos].indexOf('faasos') > -1){
+        if(line_split[origin_pos].indexOf('.com') > -1){
           var client_ip = line_split[client_ip_pos].split(":");
           var url_request = 'http://ipinfo.io/'+ client_ip[0];
           lineReader.pause();
