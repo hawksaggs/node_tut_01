@@ -13,18 +13,23 @@ router.post('/output', function(req,res){
   var line_arr = [];
   var ext = path.extname(req.file.originalname).toLowerCase();
   var description = req.body.description;
-  description = description.toLowerCase().split(" ");
   var counter = 0;
   var origin_pos = 0; // ORIGIN_HEADER position
   var client_ip_pos = 0; // CLIENT_IP position
-  description.forEach(function(doc){
-    if(doc == 'origin_header'){
-      origin_pos = counter;
-    }else if(doc == 'client_ip:port'){
-      client_ip_pos = counter;
-    }
-    counter = counter + 1;
-  });
+  if(description.length > 0) {
+    description = description.toLowerCase().split(" ");
+    description.forEach(function(doc){
+      if(doc == 'origin_header'){
+        origin_pos = counter;
+      }else if(doc == 'client_ip:port'){
+        client_ip_pos = counter;
+      }
+      counter = counter + 1;
+    });
+  }else{
+    res.render('output',{"message":"Description field is empty","success":false});
+  }
+
   if(ext == '.txt'){
     var lineReader = readline.createInterface({
       input: fs.createReadStream(req.file.path)
