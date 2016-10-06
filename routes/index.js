@@ -37,10 +37,16 @@ router.post('/output', function(req,res){
     lineReader.on('line', function (line) {
       var line_obj = {};
       if(line){
+        r1 = /(?:"[^"]*"|^[^"]*$)/;
+        var reg = line.match(r1);
+        // console.log(reg);
         var line_split = line.split(" ");
         if(line_split[origin_pos].indexOf('.com') > -1){
-          var client_ip = line_split[client_ip_pos].split(":");
-          var url_request = 'http://ipinfo.io/'+ client_ip[0];
+          var ip_regex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
+          // var client_ip = line_split[client_ip_pos].split(":");
+          var client_ip = line.match(ip_regex)[0];
+          console.log(client_ip);
+          var url_request = 'http://ipinfo.io/'+ client_ip;
           lineReader.pause();
           request(url_request,function(error, response, body){
             // console.log(response);
