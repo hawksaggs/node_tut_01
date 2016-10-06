@@ -37,9 +37,10 @@ router.post('/output', function(req,res){
     lineReader.on('line', function (line) {
       var line_obj = {};
       if(line){
-        r1 = /(?:"[^"]*"|^[^"]*$)/;
-        var reg = line.match(r1);
-        // console.log(reg);
+        // r1 = /(?:"[^"]*"|^[^"]*$)/;
+        r1 =  line.match(/"(.*?)"/);
+        // var reg = line.match(r1);
+        console.log(r1);
         var line_split = line.split(" ");
         if(line_split[origin_pos].indexOf('.com') > -1){
           var ip_regex = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
